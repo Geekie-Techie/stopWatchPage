@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.tailwindcss.com"></script>
+    <title>Stop Watch App</title>
+</head>
+<body class="bg-cover bg-center h-screen " style="background-image: url('./city.jpg');">
+	<div class="flex justify-center">
+		<div class="text-center border-4 border-black w-1/4 p-6 rounded-xl bg-white mt-60">
+			<h1 class="text-4xl">Stop Watch</h1>
+			<br>
+		    <div class="text-3xl font-bold" id="timer">00:00:00:00</div>
+			<br>
+			<button class="bg-blue-400 text-white text-2xl font-bold hover:bg-blue-600 p-2 rounded m-1" onclick="start()">Start</button>
+			<button class="bg-red-400 text-white text-2xl font-bold hover:bg-red-600 p-2 rounded m-1" onclick="stop()">Stop</button>
+			<button class="bg-green-400 text-white text-2xl font-bold hover:bg-green-600 p-2 rounded m-1" onclick="reset()">Reset</button>
+		</div>
+	<div>
+    <script>
+		let startTime = 0;
+		let elapsedTime = 0;
+		let timerInterval;
+
+		let timer = document.getElementById("timer");
+
+		function start() {
+		  startTime = new Date().getTime() - elapsedTime;
+		  timerInterval = setInterval(updateTimer, 10);
+		}
+
+		function stop() {
+		  clearInterval(timerInterval);
+		}
+
+		function reset() {
+		  clearInterval(timerInterval);
+		  elapsedTime = 0;
+		  timer.textContent = '00:00:00:00';
+		}
+
+		function updateTimer() {
+		  elapsedTime = new Date().getTime() - startTime;
+		  let hours = Math.floor(elapsedTime / 3600000);
+		  let minutes = Math.floor((elapsedTime % 3600000) / 60000);
+		  let seconds = Math.floor((elapsedTime % 60000) / 1000);
+		  let milliseconds = Math.floor(elapsedTime % 1000 / 10);
+
+		  let hoursStr = hours.toString().padStart(2, '0');
+		  let minutesStr = minutes.toString().padStart(2, '0');
+		  let secondsStr = seconds.toString().padStart(2, '0');
+		  let millisecondsStr = milliseconds.toString().padStart(2, '0');
+
+		  timer.textContent = `${hoursStr}:${minutesStr}:${secondsStr}:${millisecondsStr}`;
+		}
+	</script>
+</body>
+</html>
